@@ -1,16 +1,20 @@
 package com.quaziwerk.sduhrms.scraping;
 
+import com.quaziwerk.sduhrms.model.ResultRecord;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Scraper {
 
     /**
      * регион
      * профобласть
-     * зарплата
-     * опыт работы
+     * зарплата         salary_from; salary_to
+     * опыт работы      experience
      * ключевые навыки
      * язык
      * возраст
@@ -19,6 +23,9 @@ public class Scraper {
      * категория прав
      * пол
      * исключение
+     * etc
+     *
+     * page;
      */
 
     public static void main(String[] args) throws Exception {
@@ -30,6 +37,20 @@ public class Scraper {
                 System.out.println(row.attr("data-hh-resume-hash"));
             }
         System.out.println(count);
+    }
+
+    public static List<ResultRecord> search() {
+        List<ResultRecord> list = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            ResultRecord resultRecord = new ResultRecord();
+            resultRecord.id = "vcds";
+            resultRecord.position = "vcds";
+            resultRecord.age = 22;
+            resultRecord.experience = "dcaxvcds";
+            resultRecord.last_job = "ewdasfvcds";
+            list.add(resultRecord);
+        }
+        return list;
     }
 
 }
