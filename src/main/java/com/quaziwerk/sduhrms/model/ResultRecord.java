@@ -4,7 +4,7 @@ public class ResultRecord {
 
     public String id;
     public String position;
-    public int age;
+    public String age;
     public String experience;
     public String last_job;
 

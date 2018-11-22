@@ -39,16 +39,32 @@ public class Scraper {
         System.out.println(count);
     }
 
-    public static List<ResultRecord> search() {
+    public static List<ResultRecord> search(String word) {
         List<ResultRecord> list = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            ResultRecord resultRecord = new ResultRecord();
-            resultRecord.id = "vcds";
-            resultRecord.position = "vcds";
-            resultRecord.age = 22;
-            resultRecord.experience = "dcaxvcds";
-            resultRecord.last_job = "ewdasfvcds";
-            list.add(resultRecord);
+        try {
+            String url = "https://hh.kz/search/resume?text=" + word +
+                    "&logic=normal&pos=full_text&exp_period=all_time&clusters=true&area=" +
+                    "160&currency_code=KZT&order_by=relevance&no_magic=false";
+            final Document document = Jsoup.connect(url).get();
+            for (Element row : document.select("div.resume-search-item")) {
+
+                ResultRecord resultRecord = new ResultRecord();
+                resultRecord.id = row.attr("data-hh-resume-hash");
+
+                resultRecord.position = row.select("a").first().text();
+                resultRecord.age = row.select("div.resume-search-item__fullname").select("span").first().text();
+                resultRecord.experience = row.select("div.resume-search-item__description-content").first().text();
+
+                if (resultRecord.experience.length() >= 20) {
+                    resultRecord.experience = "";
+                }
+                resultRecord.last_job = row.select("button.bloko-link-switch").text() +" "+
+                        row.select("span.resume-search-item__company-name").text();
+
+                list.add(resultRecord);
+            }
+
+        } catch (Exception ignored) {
         }
         return list;
     }
