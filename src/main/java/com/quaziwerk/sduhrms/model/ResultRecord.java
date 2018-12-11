@@ -7,6 +7,7 @@ public class ResultRecord {
     public String age;
     public String experience;
     public String last_job;
+    public String source;
 
     public ResultRecord() {
     }

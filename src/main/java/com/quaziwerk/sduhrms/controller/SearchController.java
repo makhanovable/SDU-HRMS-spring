@@ -11,8 +11,8 @@ import java.util.List;
 @RequestMapping("search")
 public class SearchController {
 
-    @GetMapping("/{word}")
-    public List<ResultRecord> getResult(@PathVariable("word") String word) {
+    @GetMapping("/{word}/{source}")
+    public List<ResultRecord> getResult(@PathVariable("word") String word, @PathVariable("source") String source) {
         return Scraper.search(word);
     }
 
